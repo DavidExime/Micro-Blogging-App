@@ -1,0 +1,9 @@
+<h3>Your blogs</h3>
+
+<% @blogs.each do |t|%>
+	<div><%= t.title %></div>
+	------------------------
+	<form action='/delete_blog' method='post'>
+	<input type="submit" value="Delete blog">
+	</form>
+<% end %>	
