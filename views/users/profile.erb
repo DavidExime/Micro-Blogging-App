@@ -1,8 +1,26 @@
-<h3>Welcome</h3>
+<h2>Welcome</h2>
 <%= @user.fname %>
+<%= @user.lname %>
 
-<br>
+
+<div>Username:
 
 <%= @user.username %>
 
-<a href='/users/<%= @user.id %>/edit'>Edit</a>
+<a href='/users-<%= @user.id %>/edit'>Edit/Delete</a></div>
+
+<br>
+
+<!-- Create Blog Button -->
+
+<input type="submit" value="Create New Blog Post">
+
+<!-- Your Blog Posts Button -->
+
+<a href=""><input type="submit" value="Your Blog Posts"></a>
+
+<!-- Logout button below -->
+
+<form action='/logout' method='post'>
+	<input type="submit" value="Logout">
+</form>
