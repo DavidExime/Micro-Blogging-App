@@ -7,6 +7,11 @@ require 'pry'
 set :database, "sqlite3:main.sqlite3"
 set :sessions, true
 
+
+get '/' do
+	@edit =  
+
+
 get '/' do 
 	@blogs = Blog.all
 erb :home	
