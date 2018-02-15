@@ -12,6 +12,7 @@ get '/' do
 erb :home	
 end
 
+# Doris
 post '/signin' do
 	@username = params[:username]
 	@password = params[:password]
@@ -56,6 +57,12 @@ post "/delete_blog" do
 	@blogs = Blog.where(user_id: user.id)
 	.destroy
     redirect '/your-blog-list'
+end
+
+# Brandon
+get '/users-:id' do
+@user = User.find(params[:id])
+erb :'users/profile'
 end
 
 

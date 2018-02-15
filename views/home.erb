@@ -1,3 +1,4 @@
+<!-- Doris -->
 <h3>All blogs</h3>
 
 <% @blogs.each do |t|%>
@@ -13,3 +14,16 @@
 	<input type="submit" value="Sign in">
 
 </form>
+
+<!-- Doris -->
+
+<a href=""><div>Sign up</div></a>
+<a href=""><div>Log in</div></a>
+
+<br>
+
+<h3>Latest Blog Posts</h3>
+<% @blogs.each do |b| %>
+<a href='/blogs/<%= b.id %>'><div><%= b.title %></div></a>
+<% end %>
+
