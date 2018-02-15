@@ -1,3 +1,22 @@
+<!-- Doris -->
+<h3>All blogs</h3>
+
+<% @blogs.each do |t|%>
+	<div><%= t.title %></div>
+	------------------------
+<% end %>	
+
+
+<h4>Sign in form</h4>
+<form action='/signin' method='post'>
+	<input type="text" name="username" placeholder='username'>
+	<input type="password" name="password" placeholder='password'>
+	<input type="submit" value="Sign in">
+
+</form>
+
+<!-- Doris -->
+
 <a href=""><div>Sign up</div></a>
 <a href=""><div>Log in</div></a>
 
@@ -7,3 +26,4 @@
 <% @blogs.each do |b| %>
 <a href='/blogs/<%= b.id %>'><div><%= b.title %></div></a>
 <% end %>
+
