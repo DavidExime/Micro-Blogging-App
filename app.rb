@@ -52,10 +52,9 @@ get '/your-blog-list' do
 erb :'blogs/list'
 end
 
-post "/delete_blog" do
-	user = User.find(session[:user_id])
-	@blogs = Blog.where(user_id: user.id)
-	.destroy
+get "/:id/delete_blog" do
+	blog = Blog.find(params[:id])
+	blog.destroy
     redirect '/your-blog-list'
 end
 
