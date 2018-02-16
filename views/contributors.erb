@@ -1,4 +1,4 @@
 <h3>Latest Blog Posts</h3>
 <% @users.each do |t| %>
-<a href='/contributor/blogs'><div><%= t.username %></div></a>
+<a href='/contributors/<%= t.id %>'><div><%= t.username %></div></a>
 <% end %>

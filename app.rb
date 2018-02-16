@@ -18,10 +18,10 @@ get '/contributors' do
 erb :contributors	
 end
 
-get '/contributor/blogs' do
-	user = User.find(session[:user_id])
-	@blogs = Blog.where(user_id: user.id)
-erb :'blogslist'
+get '/contributors/:id' do
+	@user = User.find(params[:id])
+	@blogs = Blog.all(user_id: user.id)
+erb :blogslist
 end
 
 # Doris
@@ -30,7 +30,7 @@ post '/signin' do
 	@password = params[:password]
 	if user = User.where(username: @username, password: @password).first
 	session[:user_id] = user.id
-	# here for interpolation you always need to user double quotes
+	# here for interpolation you always need to use double quotes
 	redirect "/create-new-blog"
 	else
 		redirect '/'
