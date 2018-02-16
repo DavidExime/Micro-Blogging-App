@@ -3,7 +3,7 @@
 <link rel="stylesheet" type="text/css" href="main.css">
 <header>
 
-<h2 class='hello'>Hello to My Page</h2>
+<h2 class='hello'>Log into Blog</h2>
 <h2 class='hello'>Test</h2>
 
 <h4>Sign in form</h4>
@@ -13,9 +13,7 @@
 	<input type="submit" value="Sign in">
 
 </form>
-<hr>
-<h3>List of Blog titles</h3>
-<% @blogs.each do |b| %>
+
 <a href='/blogs/<%= b.id %>'><div><%= b.title %></div></a>
-<% end %>
+
 
