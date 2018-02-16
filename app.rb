@@ -40,14 +40,26 @@ redirect "/"
 end
 
 #dave
-get '/edit' do
-	# @user = User.find(params[:id])
+get 'users/:id/edit' do
+	@user = User.find(params[:id])
+
 	erb :'users/edit' 
 end 
 
+get "/signup" do
 
-post '/update_user' do 
-	user = User.find(session[:user_id])
+erb :'/users/signup'
+end
+
+
+get "/users/:id/edit" do
+@user = User.find(params[:id])
+erb :'/users/edit'
+end
+
+
+post '/users/:id/update_user' do 
+	user = User.find(params[:id])
 	User.update(fname: params[:fname], lname: params[:lname], username: params[:username], password: params[:password])
 redirect "/users/#{user.id}"
 end
@@ -70,9 +82,9 @@ post '/signin' do
 end
 
 #dave
-post '/signup' do
+post '/create_users' do
 user = User.create(fname: params[:fname], lname: params[:lname], username: params[:username], password: params[:password])
-	session [:user_id] = user.id
+	session[:user_id] = user.id
     redirect "/users/#{user.id}"
 end
 
@@ -122,6 +134,11 @@ session[:user_id] = nil
 redirect "/"
 end
 
+post "/delete_user" do
+user = User.find(session[:user_id])
+user.destroy
+redirect '/'
+end
 
 
 
