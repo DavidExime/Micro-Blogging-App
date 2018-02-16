@@ -3,15 +3,20 @@
 </head>
 <div class="navbar">
 	<a href="/">Home</a>
+
     <% if !current_user %>
     	<a href='/login'>Login</a>
 	<% else %>
 		<a href='/users/<%= current_user.id %>'>Profile</a>
-		<a href='/logout'>logout</a>
+		
 		<!-- <form method='post' action='/logout'>
 			<input type="submit" name="" value='log out'>
 		</form> -->
 	<%end%>
+
+	<a href="/profile">Profile</a>
+	<a href="/contributors">Contributors</a>
+	
 </div>
 
 

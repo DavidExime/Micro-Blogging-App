@@ -10,6 +10,7 @@ enable :sessions
 set :database, "sqlite3:main.sqlite3"
 set :sessions, true
 
+
 def current_user
  User.find_by_id(session[:user_id])
 end
@@ -17,6 +18,18 @@ end
 get '/' do 
 	@blogs = Blog.all
 erb :home	
+end
+
+
+get '/contributors' do 
+	@users = User.all
+erb :contributors	
+end
+
+get '/contributors/:id' do
+	@user = User.find(params[:id])
+	@blogs = Blog.all(user_id: user.id)
+erb :blogslist
 end
 
 get '/users/:id' do
@@ -72,7 +85,6 @@ get "/:id/delete_blog" do
 	blog.destroy
     redirect '/your-blog-list'
 end
-
 
 get '/users/:id' do
     	@user = User.find(params[:id])
