@@ -1,12 +1,6 @@
 <!-- Doris -->
 <h3>All blogs</h3>
 
-<% @blogs.each do |t|%>
-	<div><%= t.title %></div>
-	------------------------
-<% end %>	
-
-
 <h4>Sign in form</h4>
 <form action='/signin' method='post'>
 	<input type="text" name="username" placeholder='username'>

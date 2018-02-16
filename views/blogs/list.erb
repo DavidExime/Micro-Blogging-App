@@ -2,7 +2,9 @@
 
 <% @blogs.each do |t|%>
 	<div><%= t.title %></div>
-	------------------------
-	<a href='/<%= t.id %>/delete_blog'>Delete</a>
-
+	<form action='/<%= t.id %>/delete_blog' method='get'>
+	<div><input type="submit" value="Delete Blog"></div>
+    </form>
+    <!-- <a href='/<%= t.id %>/delete_blog'>Delete Blog</a> -->
+------------------------
 <% end %>	

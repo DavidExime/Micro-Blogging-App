@@ -1,15 +1,14 @@
+
+
 require 'sinatra'
 require 'sinatra/activerecord'
 require './models'
 require 'sinatra/flash'
 require 'pry'
 
+enable :sessions
 set :database, "sqlite3:main.sqlite3"
 set :sessions, true
-
-
-get '/' do
-	@edit =  
 
 
 get '/' do 
@@ -42,11 +41,12 @@ end
 post '/create' do
     user = User.find(session[:user_id])
     blog = Blog.create(title: params[:title], content: params[:content], user_id: user.id)
-	redirect '/'
+    p blog
+	redirect "/blogs/#{blog.id}"
 end	
 
 
-get '/blogs-:id' do
+get '/blogs/:id' do
 	@blog = Blog.find(params[:id])
 erb :'blogs/page'
 end
@@ -63,16 +63,11 @@ get "/:id/delete_blog" do
     redirect '/your-blog-list'
 end
 
-# Brandon
+
 get '/users-:id' do
 @user = User.find(params[:id])
 erb :'users/profile'
 end
-
-
-
-
-
 
 
 
