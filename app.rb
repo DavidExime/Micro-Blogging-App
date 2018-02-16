@@ -1,20 +1,17 @@
-
-
 require 'sinatra'
 require 'sinatra/activerecord'
 require './models'
 require 'sinatra/flash'
 require 'pry'
 
-enable :sessions
 set :database, "sqlite3:main.sqlite3"
 set :sessions, true
+
 
 get '/' do 
 	@blogs = Blog.all
 erb :home	
 end
-
 
 get '/contributors' do 
 	@users = User.all
@@ -22,31 +19,10 @@ erb :contributors
 end
 
 get '/contributors/:id' do
-	@user = User.find(params[:id])
-	@blogs = Blog.all(user_id: user.id)
-erb :blogslist
+	user = User.find(params[:id])
+	@blogs = Blog.where(user_id: user.id)
+erb :bloglist
 end
-
-get '/users/:id' do
-	@user = User.find(params[:id])
-	erb :'users/profile'
-end
-
-get '/edit' do
-	@user = User.find(params[:id])
-	erb :'users/edit' 
-
-end 
-
-get '/login' do
-	@user = User.find(params[:id])
-	erb :'users/login'
-end
-
-
-get '/signup' do
-	@user = User.find(params[:id])
-	erb :'users/signup'
 
 # Doris
 post '/signin' do
@@ -73,8 +49,7 @@ end
 post '/create' do
     user = User.find(session[:user_id])
     blog = Blog.create(title: params[:title], content: params[:content], user_id: user.id)
-    p blog
-	redirect "/blogs/#{blog.id}"
+	redirect '/'
 end	
 
 
@@ -89,16 +64,20 @@ get '/your-blog-list' do
 erb :'blogs/list'
 end
 
-get "/:id/delete_blog" do
-	blog = Blog.find(params[:id])
-	blog.destroy
+post "/delete_blog" do
+	user = User.find(session[:user_id])
+	@blogs = Blog.where(user_id: user.id)
+	.destroy
     redirect '/your-blog-list'
 end
 
-get '/users-:id' do
+# Brandon
+get '/users/:id' do
 @user = User.find(params[:id])
 erb :'users/profile'
 end
+
+
 
 
 

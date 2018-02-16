@@ -1,7 +1,10 @@
+<head>
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+</head>
 <h3>Blogs</h3>
 
 <% @blogs.each do |t|%>
-	<div><%= t.title %></div>
+	<a href='/blogs/<%= t.id %>'><div><%= t.title %></div></a>
 	------------------------
 	
 <% end %>	
