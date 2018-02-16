@@ -61,7 +61,7 @@ post "/delete_blog" do
 end
 
 # Brandon
-get '/users-:id' do
+get '/users/:id' do
 @user = User.find(params[:id])
 erb :'users/profile'
 end
