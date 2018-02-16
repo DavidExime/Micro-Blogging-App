@@ -10,16 +10,15 @@ enable :sessions
 set :database, "sqlite3:main.sqlite3"
 set :sessions, true
 
-<<<<<<< HEAD
-=======
+def current_user
+ User.find_by_id(session[:user_id])
+end
 
->>>>>>> master
 get '/' do 
 	@blogs = Blog.all
 erb :home	
 end
 
-<<<<<<< HEAD
 get '/users/:id' do
 	@user = User.find(params[:id])
 	erb :'users/profile'
@@ -28,33 +27,18 @@ end
 get '/edit' do
 	@user = User.find(params[:id])
 	erb :'users/edit' 
-
 end 
 
 get '/login' do
-	@user = User.find(params[:id])
+
 	erb :'users/login'
 end
 
 
 get '/signup' do
-	@user = User.find(params[:id])
 	erb :'users/signup'
-
-=======
-# Doris
-post '/signin' do
-	@username = params[:username]
-	@password = params[:password]
-	if user = User.where(username: @username, password: @password).first
-	session[:user_id] = user.id
-	# here for interpolation you always need to user double quotes
-	redirect "/create-new-blog"
-	else
-		redirect '/'
-	end	
->>>>>>> master
 end
+
 
 get '/create-new-blog' do
 	if session[:user_id] == nil
@@ -68,7 +52,6 @@ end
 post '/create' do
     user = User.find(session[:user_id])
     blog = Blog.create(title: params[:title], content: params[:content], user_id: user.id)
-    p blog
 	redirect "/blogs/#{blog.id}"
 end	
 
@@ -91,14 +74,14 @@ get "/:id/delete_blog" do
 end
 
 
-get '/users-:id' do
-@user = User.find(params[:id])
+get '/users/:id' do
+    	@user = User.find(params[:id])
 erb :'users/profile'
 end
 
-
-
-
-
+post '/logout' do
+session[:user_id] = nil
+redirect "/"
+end
 
 
