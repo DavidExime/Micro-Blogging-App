@@ -13,6 +13,17 @@ get '/' do
 erb :home	
 end
 
+get '/contributors' do 
+	@users = User.all
+erb :contributors	
+end
+
+get '/contributor/blogs' do
+	user = User.find(session[:user_id])
+	@blogs = Blog.where(user_id: user.id)
+erb :'blogslist'
+end
+
 # Doris
 post '/signin' do
 	@username = params[:username]
