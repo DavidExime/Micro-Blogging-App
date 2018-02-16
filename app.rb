@@ -1,12 +1,9 @@
-
-
 require 'sinatra'
 require 'sinatra/activerecord'
 require './models'
 require 'sinatra/flash'
 require 'pry'
 
-enable :sessions
 set :database, "sqlite3:main.sqlite3"
 set :sessions, true
 
@@ -20,16 +17,15 @@ get '/' do
 erb :home	
 end
 
-
 get '/contributors' do 
 	@users = User.all
 erb :contributors	
 end
 
 get '/contributors/:id' do
-	@user = User.find(params[:id])
-	@blogs = Blog.all(user_id: user.id)
-erb :blogslist
+	user = User.find(params[:id])
+	@blogs = Blog.where(user_id: user.id)
+erb :bloglist
 end
 
 get '/users/:id' do
@@ -51,9 +47,9 @@ end
 
 
 post '/update_user' do 
-	@user = User.find(params[:id])
-	@user.update(username: @username, password: @password)
-reditect "/profile"
+	user = User.find(session[:user_id])
+	User.update(fname: params[:fname], lname: params[:lname], username: params[:username], password: params[:password])
+redirect "/users/#{user.id}"
 end
 
 get '/login' do
@@ -61,13 +57,15 @@ get '/login' do
 end
 
 #dave
-get '/login' do
-	# @username = params[:username]
+post '/signin' do
+  @username = params[:username]
 	@password = params[:password]
-	if user == User.find(username: @username, password: @password).first
-		session[:user_id] = user.id
-	erb :'users/login'
-	redirect "/profile"
+	if user = User.where(username: @username, password: @password).first
+	session[:user_id] = user.id
+	redirect "/users/#{user.id}"
+	else
+		redirect '/'
+	end	
 
 end
 
@@ -106,14 +104,16 @@ get '/your-blog-list' do
 erb :'blogs/list'
 end
 
-get "/:id/delete_blog" do
-	blog = Blog.find(params[:id])
-	blog.destroy
+post "/delete_blog" do
+	user = User.find(session[:user_id])
+	@blogs = Blog.where(user_id: user.id)
+	.destroy
     redirect '/your-blog-list'
 end
 
+
 get '/users/:id' do
-    	@user = User.find(params[:id])
+@user = User.find(params[:id])
 erb :'users/profile'
 end
 
@@ -121,5 +121,7 @@ post '/logout' do
 session[:user_id] = nil
 redirect "/"
 end
+
+
 
 
