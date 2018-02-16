@@ -37,19 +37,45 @@ get '/users/:id' do
 	erb :'users/profile'
 end
 
+#dave
+post '/logout' do
+session[:user_id] = nil
+redirect "/"
+end
+
+#dave
 get '/edit' do
-	@user = User.find(params[:id])
+	# @user = User.find(params[:id])
 	erb :'users/edit' 
 end 
 
-get '/login' do
 
+post '/update_user' do 
+	@user = User.find(params[:id])
+	@user.update(username: @username, password: @password)
+reditect "/profile"
+end
+
+get '/login' do
 	erb :'users/login'
 end
 
+#dave
+get '/login' do
+	# @username = params[:username]
+	@password = params[:password]
+	if user == User.find(username: @username, password: @password).first
+		session[:user_id] = user.id
+	erb :'users/login'
+	redirect "/profile"
 
-get '/signup' do
-	erb :'users/signup'
+end
+
+#dave
+post '/signup' do
+user = User.create(fname: params[:fname], lname: params[:lname], username: params[:username], password: params[:password])
+	session [:user_id] = user.id
+    redirect "/users/#{user.id}"
 end
 
 
