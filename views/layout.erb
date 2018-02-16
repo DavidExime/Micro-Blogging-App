@@ -3,21 +3,29 @@
 </head>
 <div class="navbar">
 	<a href="/">Home</a>
+
+    <% if !current_user %>
+    	<a href='/login'>Login</a>
+	<% else %>
+		<a href='/users/<%= current_user.id %>'>Profile</a>
+		
+		<!-- <form method='post' action='/logout'>
+			<input type="submit" name="" value='log out'>
+		</form> -->
+	<%end%>
+
 	<a href="/contributors">Contributors</a>
-	<a href="/profile">Profile</a>
 	
 	
 </div>
 
 
-
 <div class='main-container'>
-<% flash.keys.each do |type| %>
-  <div data-alert class="flash <%= type %> alert-box radius">
-    <%= flash[type] %>
-    <a href="X" class="close">&times;</a>
-  </div>
-<% end %>
-
+	<% flash.keys.each do |type| %>
+	<div data-alert class="flash <%= type %> alert-box radius">
+		<%= flash[type] %>
+		<a href="X" class="close">&times;</a>
+	</div>
+	<% end %>
 	<%= yield %>
 </div>
