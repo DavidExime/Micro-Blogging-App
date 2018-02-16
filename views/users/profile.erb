@@ -1,3 +1,6 @@
+<head>
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+</head>
 
 <h2>Welcome</h2>
 <%= @user.fname %>
@@ -13,8 +16,9 @@
 <br>
 
 <!-- Create Blog Button -->
-
+<form action='/create-new-blog' method='get'>
 <input type="submit" value="Create New Blog Post">
+</form>
 
 <!-- Your Blog Posts Button -->
 
