@@ -44,7 +44,7 @@ post '/logout' do
 end
 
 # User Edit page
-get 'users/:id/edit' do
+get '/users/:id/edit' do
 	@user = User.find(params[:id])
 	erb :'users/edit' 
 end 
@@ -81,16 +81,14 @@ end
 # User Signup function
 post '/create_users' do
 	newUsername = params[:username]
-	if User.where(newUsername).first
-		flash[:warning] = 'can not use this username'
-		redirect '/create_users'
+	if User.where(username: newUsername) == []
+	   user = User.create(fname: params[:fname], lname: params[:lname], username: params[:username], password: params[:password])	
+	   session[:user_id] = user.id
+	   redirect "/users/#{user.id}"	   
 	else
-		user = User.create(fname: params[:fname], lname: params[:lname], username: params[:username], password: params[:password])	
-
+		flash[:warning] = 'this username have existed'
+		redirect '/signup'
 	end 	
-
-	session[:user_id] = user.id
-    redirect "/users/#{user.id}"
 end
 
 # Create New Blog page
@@ -142,6 +140,7 @@ post "/users/:id/delete_user" do
 	user.destroy
 	redirect '/'
 end
+
 
 
 
