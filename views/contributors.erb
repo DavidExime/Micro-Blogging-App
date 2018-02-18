@@ -1,3 +1,7 @@
+<head>
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+</head>
+
 <h3>Contributors</h3>
 <% @users.each do |t| %>
 <a href='/contributors/<%= t.id %>'><div><%= t.username %></div></a>
