@@ -25,7 +25,7 @@
 	<% flash.keys.each do |type| %>
 	<div data-alert class="flash <%= type %> alert-box radius">
 		<%= flash[type] %>
-		<a href="X" class="close">&times;</a>
+		<a href="/signup" class="close">x</a>
 	</div>
 	<% end %>
 	<%= yield %>
