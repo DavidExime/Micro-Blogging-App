@@ -8,14 +8,12 @@
     <% if !current_user %>
     	<a href='/login'>Login</a>
 	<% else %>
-		<a href='/users/<%= current_user.id %>'>Profile</a>
-		
-		<!-- <form method='post' action='/logout'>
-			<input type="submit" name="" value='log out'>
-		</form> -->
+		<a href='/users/<%= current_user.id %>'>Profile</a>		
 	<%end%>
 
 	<a href="/contributors">Contributors</a>
+
+	<a href="/signup">Signup</a>
 	
 	
 </div>
