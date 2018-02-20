@@ -111,6 +111,8 @@ end
 # Blog page
 get '/blogs/:id' do
 	@blog = Blog.find(params[:id])
+	@user = User.find(@blog.user_id)
+	@comments = Comment.where(blog_id: params[:id])
 erb :'blogs/page'
 end
 
@@ -140,6 +142,14 @@ post "/users/:id/delete_user" do
 	user.destroy
 	redirect '/'
 end
+
+# Create Comment function
+post "/blogs/:id/create_comments" do
+	user = User.find(session[:user_id])
+	blog = Blog.find(params[:id])
+	Comment.create(message: params[:message], user_id: user.id, blog_id: params[:id])
+	redirect "/blogs/#{blog.id}"
+end 	
 
 
 
