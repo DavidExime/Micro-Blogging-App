@@ -31,3 +31,27 @@
 <form action='/logout' method='post'>
 	<input type="submit" value="Logout">
 </form>
+
+<h3>Your recent comments on other blogs</h3>
+
+<% @comments.each do |c| %>
+<div>"<%= c.message %>"</div>
+<% blog = Blog.find(c.blog_id) %>
+<div>on <a href="/blogs/<%= c.blog_id %>"><%= blog.title %></a></div> 
+<form action='/comments/<%= c.id %>/delete_comment' method='post'>
+	<input type="submit" value="Delete comment">
+</form>
+--------- 
+<% end %>
+
+
+
+
+
+
+
+
+
+
+
+

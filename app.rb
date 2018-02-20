@@ -34,7 +34,8 @@ end
 # User's Profile page
 get '/users/:id' do
 	@user = User.find(params[:id])
-	erb :'users/profile'
+	@comments = Comment.where(user_id: params[:id]) 
+	erb :'users/profile'	
 end
 
 # User Logout function
@@ -151,6 +152,14 @@ post "/blogs/:id/create_comments" do
 	redirect "/blogs/#{blog.id}"
 end 	
 
+
+# Delete comment function
+post "/comments/:id/delete_comment" do
+	user = User.find(session[:user_id])
+	comment = Comment.find(params[:id])
+	comment.destroy
+	redirect "/users/#{user.id}"
+end
 
 
 
