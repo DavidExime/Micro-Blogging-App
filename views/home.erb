@@ -1,11 +1,18 @@
+
+
+<div class="welcome">Welcome to Blogadelphia!</div>
+
 <body>
+<div class="main-body">
 
-<div class="main-blog-posts">
+	<div class="main-blog-posts">
 
-<h3>Latest Blog Posts</h3>
-<% @blogs.each do |b| %>
-<a href='/blogs/<%= b.id %>'><div><%= b.title %></div></a>
-<% end %>
+	<h3>Latest Blog Posts</h3>
+	<% @blogs.each do |b| %>
+	<a href='/blogs/<%= b.id %>'><div><%= b.title %></div></a>
+	<% end %>
+
+	</div>
 
 </div>
 
