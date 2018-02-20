@@ -8,5 +8,33 @@
 
 <h3><%= @blog.title%></h3>
 <h3><%= @blog.content%></h3>
-
+<h3>by</h3>
+<h3><%= @user.username%></h3>
 </div>
+
+<div>Leave your comments below:</div>
+<% if !current_user %>
+    <div>Did you <a href='/login'>Login</a> yet?</div>
+<% else %>
+	<form action='/blogs/<%= @blog.id %>/create_comments' method='post'>
+	<textarea type="text" name="message" placeholder='Leave a comment...'></textarea> 
+	<input type="submit" value="Send">
+    </form>	
+<%end%>
+
+
+
+
+
+<hr>
+<div>Comments:</div>
+<br>
+<% @comments.each do |b| %>
+<div><%= b.message %></div>
+<div>from</div>
+<% commentWriter = User.find(b.user_id) %>
+<div><%= commentWriter.username %></div>
+<br>
+----------
+<% end %>
+
