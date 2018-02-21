@@ -2,10 +2,11 @@
     <link rel="stylesheet" type="text/css" href="../css/main.css">
 </head>
 
-<h3>Blogs</h3>
+<div class="user-posts">Blog Posts:
 
 <% @blogs.each do |t|%>
-	<a href='/blogs/<%= t.id %>'><div><%= t.title %></div></a>
-	------------------------
+	<a href='/blogs/<%= t.id %>'><div><%= t.title %></div></a><br>
 	
 <% end %>	
+
+</div>

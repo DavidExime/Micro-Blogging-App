@@ -8,6 +8,11 @@ set :database, "sqlite3:main.sqlite3"
 set :sessions, true
 
 
+not_found do
+	@blogs = Blog.all
+	erb :home
+end
+
 def current_user
  User.find_by_id(session[:user_id])
 end
@@ -87,7 +92,7 @@ post '/create_users' do
 	   session[:user_id] = user.id
 	   redirect "/users/#{user.id}"	   
 	else
-		flash[:warning] = 'this username have existed'
+		flash[:warning] = 'This username already exists!'
 		redirect '/signup'
 	end 	
 end
