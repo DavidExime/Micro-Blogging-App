@@ -2,3 +2,4 @@ public/css/main.css
 public/css/.sass-cache/
 public/css/main.css.map
 Gemfile.lock
+/main.sqlite3
