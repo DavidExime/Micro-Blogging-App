@@ -8,12 +8,15 @@
 	<div class="main-blog-posts">
 
 	<h3>Latest Blog Posts</h3>
-	<% @blogs.each do |b| %>
-	<a href='/blogs/<%= b.id %>'><div><%= b.title %></div></a>
-	<% end %>
+	
+	<% for i in 0..@blogs.length-1 %>
+	  <% if i <=10 %>
+	     <% b = @blogs[i] %>
+	     <a href='/blogs/<%= b.id %>'><div><%= b.title %></div></a>	
+	  <% end %>
+	<% end %>  
 
 	</div>
 
 </div>
-
 </body>
