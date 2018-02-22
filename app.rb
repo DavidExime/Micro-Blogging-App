@@ -167,4 +167,18 @@ post "/comments/:id/delete_comment" do
 end
 
 
+get '/blogs/:id/edit_blog' do
+    @blog= Blog.find(params[:id])	
+	erb :'blogs/edit'
+end 
+
+post '/blogs/:id/update_blog' do
+    user = User.find(session[:user_id])
+    blog= Blog.find(params[:id])
+    blog.update(title: params[:title], content: params[:content], user_id: user.id)
+	redirect "/blogs/#{blog.id}"
+end
+
+
+
 
