@@ -3,5 +3,10 @@ class User < ActiveRecord::Base
 end
 
 class Blog < ActiveRecord::Base
-	belongs_to :user
+	belongs_to :user 
+	has_many :comments, dependent: :destroy
+end
+
+class Comment < ActiveRecord::Base
+	belongs_to :blog
 end

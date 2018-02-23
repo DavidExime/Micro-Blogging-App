@@ -1,23 +1,22 @@
-<!-- Doris -->
-<h3>All blogs</h3>
 
-<h4>Sign in form</h4>
-<form action='/signin' method='post'>
-	<input type="text" name="username" placeholder='username'>
-	<input type="password" name="password" placeholder='password'>
-	<input type="submit" value="Sign in">
 
-</form>
+<div class="welcome">Welcome to Blogadelphia!</div>
 
-<!-- Doris -->
+<body>
+<div class="main-body">
 
-<a href=""><div>Sign up</div></a>
-<a href=""><div>Log in</div></a>
+	<div class="main-blog-posts">
 
-<br>
+	<h3>Latest Blog Posts</h3>
+	
+	<% for i in 0..@blogs.length-1 %>
+	  <% if i <=10 %>
+	     <% b = @blogs[i] %>
+	     <a href='/blogs/<%= b.id %>'><div><%= b.title %></div></a>	
+	  <% end %>
+	<% end %>  
 
-<h3>Latest Blog Posts</h3>
-<% @blogs.each do |b| %>
-<a href='/blogs/<%= b.id %>'><div><%= b.title %></div></a>
-<% end %>
+	</div>
 
+</div>
+</body>

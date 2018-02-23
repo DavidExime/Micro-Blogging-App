@@ -1,0 +1,19 @@
+<head>
+	<link rel="stylesheet" type="text/css" href="../../css/main.css">
+<div class="edit blog"></div>
+</head>
+<h3>Edit Blog</h3>
+
+<div class="titlecontent">
+<div><%= @blog.title %></div>
+<div><%= @blog.content %></div> 
+
+<div>------------------</div>
+</div>
+<div class="form">
+<form action='/blogs/<%= @blog.id %>/update_blog' method='post'>
+	<div><input type="text" name="title" placeholder='title'></div>
+	<div><textarea maxlength="150" rows="4" cols="50" type="text" name="content" placeholder='content'></textarea></div>
+	<div><input type="submit" value="Save"></div>
+</form>
+</div>

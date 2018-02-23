@@ -1,14 +1,16 @@
 body{
     margin: 0 auto;
+    font-family: 'Paytone One', sans-serif;
 }
 
 
 .navbar {
-    background-color: slategrey;
+    background-color: #4682B4;
     overflow: hidden;
     position: sticky;
     top: 0;
     z-index: 100;
+    font-family: MyFont;
  }
 
  .navbar a {
@@ -20,8 +22,7 @@ body{
     text-decoration: none;
     font-size: 2.5vh;
     font-family: MyFont;
-
- }
+}
 
  .navbar a:hover {
     background-color: lightgrey;

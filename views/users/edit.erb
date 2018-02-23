@@ -1,26 +1,23 @@
-
-<link rel="stylesheet" type="text/css" href="main.scss">
-
+<head>
+	<div id="main-body">
+	<link rel="stylesheet" type="text/css" href="/users/../css/main.css">
+</head>
 
 <h3>Edit User</h3>
 
-<form action='/update_user' method='post'>
-	<input type="text" name="lname"
-	<input type="text" name="username" placeholder='username'>
-	<input type="text" name="password" placeholder='password'>
-	<input type="submit" value="Update user">
+<form action='/users/<%= @user.id %>/update_user' method='post'>
+	<input type="type" name="fname" placeholder='First Name'>
+	<input type="type" name="lname" placeholder='Last Name'>
+	<input id='username' type="text" name="username" placeholder='Username'>
+	<input id='password' type="text" name="password" placeholder='Password'>
+	<input type="submit" value="Update User">
 </form>
 
-<h3>Logout</h3>
-<form action='/logout' method='post'>
-	<input type="submit" value="Logout">
-</form>
 
 <h3>Delete User</h3>
-<form action='/delete_user' method='post'>
+<form action='/users/<%= @user.id %>/delete_user' method='post'>
 	<input type="submit" value="Delete Account">
 	
 </form>
+</div>
 
-
-<link rel="stylesheet" type="text/css" href="">

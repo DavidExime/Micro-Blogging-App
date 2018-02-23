@@ -1,29 +1,63 @@
+<head>
+ <link rel="stylesheet" type="text/css" href="../css/main.css">
+<div class="welcome">
+	</head>
 
-<h2>Welcome</h2>
-<%= @user.fname %>
-<%= @user.lname %>
-
-
+<div id="main-body">
+	<h2>Welcome <%= @user.fname %> <%= @user.lname %></h2>
 <div>Username:
 
-<%= @user.username %>
+	<%= @user.username %>
+    <a href='/users/<%= @user.id %>/edit'>Edit/Delete</a></div>
 
-<a href='/users-<%= @user.id %>/edit'>Edit/Delete</a></div>
-
-<br>
+	<br>
+</div>
 
 <!-- Create Blog Button -->
-
+<div class="newblog">
+<form action='/create_new_blog' method='get'>
 <input type="submit" value="Create New Blog Post">
+</form>
+</div>
 
 <!-- Your Blog Posts Button -->
 
-
-<form action='/your-blog-list' method='get'>
+<div  class="bloglist">
+<form action='/your_blog_list' method='get'>
 	<input type="submit" value="Your Blog Posts">
 </form>
-<!-- Logout button below -->
+</div>
 
+<!-- Logout button below -->
+<div class="logoutform">
 <form action='/logout' method='post'>
 	<input type="submit" value="Logout">
 </form>
+</div>
+
+<div class= "recentpost">
+<h3>Your recent comments on other blogs</h3>
+</div>
+
+<% @comments.each do |c| %>
+<div>"<%= c.message %>"</div>
+<% blog = Blog.find(c.blog_id) %>
+<div>on <a href="/blogs/<%= c.blog_id %>"><%= blog.title %></a></div> 
+<form action='/comments/<%= c.id %>/delete_comment' method='post'>
+	<input type="submit" value="Delete comment">
+</form>
+--------- 
+<% end %>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+

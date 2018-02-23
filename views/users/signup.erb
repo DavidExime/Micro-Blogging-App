@@ -2,16 +2,20 @@
 <link rel="stylesheet" type="text/css" href="main.css">
 <header>
 
-<h4 class='hello'>Please Sign in to view</h4>
+<div class="sign-up">Sign Up:
 
-<h3>Sign Up form</h3>
-
-<form action='/create_users' method='post'>
-	<input type="text" name="username" placeholder='username'>
-	<input type="text" name="password" placeholder='password'>
-	<input type="fname" name="lname"
-	<input type="submit" value="Create new user">
-
-
+<form id='signupForm' action='/create_users' method='post'>
+	<input type="type" name="fname" placeholder='First Name'>
+	<input type="type" name="lname" placeholder='Last Name'>
+	<input type="text" name="username" placeholder='Username'>
+	<input id='password' type="text" name="password" placeholder='Password'>
 </form>
 
+
+
+<input id='submit' type="submit" onclick="checkPass(str)" value='Create new user'>
+
+<div id='message'></div>
+</div>
+
+<script type="text/javascript" src="JavaScript/main.js"></script>

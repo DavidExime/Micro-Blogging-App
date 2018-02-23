@@ -1,78 +1,104 @@
-
-
 require 'sinatra'
 require 'sinatra/activerecord'
 require './models'
 require 'sinatra/flash'
 require 'pry'
 
-enable :sessions
 set :database, "sqlite3:main.sqlite3"
 set :sessions, true
 
+
+not_found do
+	@blogs = Blog.all
+	erb :home
+end
+
+def current_user
+ User.find_by_id(session[:user_id])
+end
+
+# Home page
 get '/' do 
 	@blogs = Blog.all
 erb :home	
 end
 
+#Contributors page
+get '/contributors' do 
+	@users = User.all
+erb :contributors	
+end
+
+# Public Blog List by Contributor
+get '/contributors/:id' do
+	user = User.find(params[:id])
+	@blogs = Blog.where(user_id: user.id)
+erb :bloglist
+end
+
+# User's Profile page
 get '/users/:id' do
 	@user = User.find(params[:id])
-	erb :'users/profile'
+	@comments = Comment.where(user_id: params[:id]) 
+	erb :'users/profile'	
 end
 
-#dave
+# User Logout function
 post '/logout' do
-session[:user_id] = nil
-redirect "/"
+	session[:user_id] = nil
+	redirect "/"
 end
 
-#dave
-get '/edit' do
-	# @user = User.find(params[:id])
+# User Edit page
+get '/users/:id/edit' do
+	@user = User.find(params[:id])
 	erb :'users/edit' 
 end 
 
-post '/update_user' do 
-	@user = User.find(params[:id])
-	@user.update(username: @username, password: @password)
-
-reditect "/profile"
-end
-#dave
-get '/login' do
-	# @username = params[:username]
-	@password = params[:password]
-	if user == User.find(username: @username, password: @password).first
-		session[:user_id] = user.id
-	erb :'users/login'
-	redirect "/profile"
-
-end
-
-#dave
-get '/signup' do
-	# @user = User.find(params[:id])
+# User Signup page
+get "/signup" do
 	erb :'users/signup'
-if user == User.create(username:@username, password: @password).first
-	session [:user_id] = user.id
-    erb :'user/signup'
-    redirect "/profile"
 end
 
-# Doris
-# post '/signin' do
-# 	@username = params[:username]
-# 	@password = params[:password]
-# 	if user = User.where(username: @username, password: @password).first
-# 	session[:user_id] = user.id
-# 	# here for interpolation you always need to user double quotes
-# 	redirect "/create-new-blog"
-# 	else
-# 		redirect '/'
-# 	end	
-# end
+# User Update function
+post '/users/:id/update_user' do 
+	user = User.find(params[:id])
+	user.update(fname: params[:fname], lname: params[:lname], username: params[:username], password: params[:password])
+redirect "/users/#{user.id}"
+end
 
-get '/create-new-blog' do
+# User Login page
+get '/login' do
+	erb :'users/login'
+end
+
+# User Login function
+post '/signin' do
+  @username = params[:username]
+  @password = params[:password]
+  if user = User.where(username: @username, password: @password).first
+  	session[:user_id] = user.id
+	redirect "/users/#{user.id}"
+  else
+  	redirect '/'
+  end	
+end
+
+# User Signup function
+post '/create_users' do
+	newUsername = params[:username]
+	if User.where(username: newUsername) == []
+	   user = User.create(fname: params[:fname], lname: params[:lname], username: params[:username], password: params[:password])	
+	   session[:user_id] = user.id
+	   redirect "/users/#{user.id}"	   
+	else
+		flash[:warning] = 'This username already exists!'
+		redirect '/signup'
+	end 	
+end
+
+# Create New Blog page
+get '/create_new_blog' do
 	if session[:user_id] == nil
 	   flash[:alert] = 'You are not signed in'
        redirect "/"
@@ -81,39 +107,77 @@ get '/create-new-blog' do
     end	
 end
 
-post '/create' do
+# Create New Blog function
+post '/create_blogs' do
     user = User.find(session[:user_id])
     blog = Blog.create(title: params[:title], content: params[:content], user_id: user.id)
-    p blog
 	redirect "/blogs/#{blog.id}"
 end	
 
-
+# Blog page
 get '/blogs/:id' do
 	@blog = Blog.find(params[:id])
+	@user = User.find(@blog.user_id)
+	@comments = Comment.where(blog_id: params[:id])
 erb :'blogs/page'
 end
 
-get '/your-blog-list' do
+# Personal Blog List page
+get '/your_blog_list' do
 	user = User.find(session[:user_id])
 	@blogs = Blog.where(user_id: user.id)
 erb :'blogs/list'
 end
 
-get "/:id/delete_blog" do
+# Blog Delete function
+post "/blogs/:id/delete_blog" do
 	blog = Blog.find(params[:id])
 	blog.destroy
-    redirect '/your-blog-list'
+    redirect '/your_blog_list'
+end
+
+# User Logout function
+post '/logout' do
+	session[:user_id] = nil
+	redirect "/"
+end
+
+# User Delete function
+post "/users/:id/delete_user" do
+	user = User.find(params[:id])
+	user.destroy
+	redirect '/'
+end
+
+# Create Comment function
+post "/blogs/:id/create_comments" do
+	user = User.find(session[:user_id])
+	blog = Blog.find(params[:id])
+	Comment.create(message: params[:message], user_id: user.id, blog_id: params[:id])
+	redirect "/blogs/#{blog.id}"
+end 	
+
+
+# Delete comment function
+post "/comments/:id/delete_comment" do
+	user = User.find(session[:user_id])
+	comment = Comment.find(params[:id])
+	comment.destroy
+	redirect "/users/#{user.id}"
 end
 
 
-get '/users-:id' do
-@user = User.find(params[:id])
-erb :'users/profile'
+get '/blogs/:id/edit_blog' do
+    @blog= Blog.find(params[:id])	
+	erb :'blogs/edit'
+end 
+
+post '/blogs/:id/update_blog' do
+    user = User.find(session[:user_id])
+    blog= Blog.find(params[:id])
+    blog.update(title: params[:title], content: params[:content], user_id: user.id)
+	redirect "/blogs/#{blog.id}"
 end
-
-
-
 
 
 
